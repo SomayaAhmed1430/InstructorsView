@@ -1,0 +1,41 @@
+﻿@model Instructor
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Instructor Details</h1>
+
+<div class="details">
+	<div class="image">
+		<img src="~/imgs/@Model.Img" alt="Alternate Text" />
+	</div>
+	<div class="text">
+		<h2>
+			@Model.Name
+		</h2>
+		<h4>
+			Salary : @Model.Salary
+		</h4>
+		<h4>
+			Address : @Model.Address
+		</h4>
+	</div>
+</div>
+
+
+<style>
+	.image img {
+		width: 400px;
+		border-radius: 20px;
+	}
+
+	.details {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.text {
+		padding: 50px;
+	}
+</style>
+
