@@ -5,7 +5,7 @@
 
 <h1>Index</h1>
 
-<a href="/Department/New">Add New Instructor</a>
+<a href="/Instructor/NewInstructor">Add New Instructor</a>
 
 <h2>All Instructors</h2>
 
@@ -16,6 +16,7 @@
         <th>Name</th>
         <th>Salary</th>
         <th>Address</th>
+        <th>Actions</th>
     </tr>
     @foreach (var item in Model)
     {
@@ -25,6 +26,12 @@
             <th>@item.Name</th>
             <th>@item.Salary</th>
             <th>@item.Address</th>
+            <th>
+                <a href="/Instructor/Details/@item.Id">Details</a>
+                <a href="/Instructor/Edit/@item.Id">Edit</a>
+                <a class="btn btn-danger" href="/Instructor/Delete/@item.Id"
+                   onclick="return confirm('Are you sure you want to delete this instructor?')">Delete</a>
+            </th>
         </tr>
     }
 </table>

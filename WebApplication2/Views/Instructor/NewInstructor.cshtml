@@ -1,20 +1,67 @@
-﻿
+﻿@model InstructorWithDeptAndCrsListViewModel
 @{
     ViewData["Title"] = "NewInstructor";
 }
 
-<h1>NewInstructor</h1>
+<h1>New Instructor</h1>
 
-@* /Department/SaveNew?Name=Safaa&Manger=Ahmed *@
-<form action="/Department/SaveNew" method="get">
+@* /Instructor/SaveNew?Name=value&Manger=value *@
+<form action="/Instructor/SaveNew" method="post">
     <div>
         <label>Name</label>
-        <input class="form-check form-control" type="text" name="Name" id="Name"/>
+        <input class="form-check form-control" type="text" name="Name" id="Name" value="@Model?.Name"/>
     </div>
     <div>
-        <label>Manger Name</label>
-        <input class="form-check form-control" type="text" name="Manger" id="Manger" />
+        <label>Img</label>
+        <input class="form-check form-control" type="text" name="Img" id="Img" value="@Model?.Img" />
     </div>
+    <div>
+        <label>Salary</label>
+        <input class="form-check form-control" type="text" name="Salary" id="Salary" value="@Model?.Salary" />
+    </div>
+    <div>
+        <label>Address</label>
+        <input class="form-check form-control" type="text" name="Address" id="Address" value="@Model?.Address" />
+    </div>
+    <div>
+        <label>Department</label>
+        @* <input class="form-check form-control" type="text" name="DeptId" id="DeptId" value="@Model?.DeptId" /> *@
+        <select class="form-check form-control" name="DeptId" id="DeptId">
+            @foreach (var deptItem in Model.DeptList)
+            {
+                if (deptItem.Id == Model.DeptId)
+                {
+                    <option value="@deptItem.Id" selected>@deptItem.Name</option>
+                }
+                else
+                {
+                    <option value="@deptItem.Id">@deptItem.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div>
+        <label>Course</label>
+        @* <input class="form-check form-control" type="text" name="CrsId" id="CrsId" value="@Model?.CrsId" /> *@
+        <select class="form-check form-control" name="CrsId" id="CrsId">
+            @foreach (var crsItem in Model.CrsList)
+            {
+                if (crsItem.Id == Model.CrsId)
+                {
+                    <option value="@crsItem.Id" selected>
+                        @crsItem.Name
+                    </option>
+                }
+                else
+                {
+                    <option value="@crsItem.Id">
+                        @crsItem.Name
+                    </option>
+                }
+            }
+        </select>
+    </div>
+    
     <input type="submit" name="save" value="Create" class="btn btn-success"/>
 </form>
-<a href="/Department/Index">Back To List</a>
+<a href="/Instructor/Index">Back To List</a>
