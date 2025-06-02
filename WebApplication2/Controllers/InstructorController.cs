@@ -24,5 +24,18 @@ namespace WebApplication2.Controllers
 
             return View("Details", inst);
         }
+
+        // Department/NewInstructor
+        public IActionResult NewInstructor()
+        { 
+            return View("NewInstructor");
+        }
+
+        // Department/SaveNew? Name = value & Manger = value
+        //public IActionResult SaveNew(string name, string manger) 
+        //{
+        //    Instructor inst = new Instructor();
+        //    inst.Name = name;
+        //}
     }
 }

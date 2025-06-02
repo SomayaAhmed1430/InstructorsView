@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "NewInstructor";
+}
+
+<h1>NewInstructor</h1>
+
+@* /Department/SaveNew?Name=Safaa&Manger=Ahmed *@
+<form action="/Department/SaveNew" method="get">
+    <div>
+        <label>Name</label>
+        <input class="form-check form-control" type="text" name="Name" id="Name"/>
+    </div>
+    <div>
+        <label>Manger Name</label>
+        <input class="form-check form-control" type="text" name="Manger" id="Manger" />
+    </div>
+    <input type="submit" name="save" value="Create" class="btn btn-success"/>
+</form>
+<a href="/Department/Index">Back To List</a>
