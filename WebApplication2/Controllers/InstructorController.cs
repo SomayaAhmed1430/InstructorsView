@@ -9,10 +9,25 @@ namespace WebApplication2.Controllers
     {
         Context context = new Context();
         // Instructor/Index
-        public IActionResult Index()
+        public IActionResult Index(int page=1)
         {
-            List<Instructor> instructors = context.Instructors.ToList();
-            return View("Index", instructors);
+            int pageSize = 3; // 3 instructors
+
+            var instructors = context.Instructors
+                             .Skip((page - 1) * pageSize)
+                             .Take(pageSize)
+                             .ToList();
+
+            int totalCount = context.Instructors.Count();
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(instructors);
+
+            //List<Instructor> instructors = context.Instructors.ToList();
+            //return View("Index", instructors);
         }
 
         // Instructor/Details/1
