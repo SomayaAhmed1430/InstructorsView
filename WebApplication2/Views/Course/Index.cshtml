@@ -1,0 +1,64 @@
+﻿@model List<Course>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@* <a href="/Course/New">Add New Course</a> *@
+<a asp-action="New" asp-controller="Course" >Add New Course</a>
+
+<h2>All Courses</h2>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Degree</th>
+        <th>MinDegree</th>
+        <th>Hours</th>
+        <th>Department</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>@item.Id</th>
+            <th>@item.Name</th>
+            <th>@item.Degree</th>
+            <th>@item.MinDegree</th>
+            <th>@item.Hours</th>
+            <th>@item.DeptId</th>
+            <th>
+                <a href="/Course/Details/@item.Id">Details</a>
+                <a href="/Course/Edit/@item.Id">Edit</a>
+                @* <a class="btn btn-danger" href="/Instructor/Delete/@item.Id" *@
+                @*    onclick="return confirm('Are you sure you want to delete this instructor?')">Delete</a> *@
+            </th>
+        </tr>
+    }
+</table>
+
+
+@* Pagination *@
+<div class="pagination">
+    @if (ViewBag.TotalPages > 1)
+    {
+        for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            if (i == ViewBag.CurrentPage)
+            {
+                <span class="btn btn-dark m-1">@i</span>
+            }
+            else
+            {
+                <a class="btn btn-outline-dark m-1" href="/Course/Index?page=@i">@i</a>
+            }
+        }
+    }
+</div>
+<style>
+    .pagination {
+        margin-top: 20px;
+    }
+</style>

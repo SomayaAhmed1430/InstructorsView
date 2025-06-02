@@ -1,0 +1,70 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "New";
+
+    // Explicit Casting
+    SelectList deptOptions = new SelectList(ViewBag.DeptList, "Id", "Name");
+}
+
+<h1>Add New Course</h1>
+
+@* /Course/SaveNew?Name=value&.... *@
+
+@* <form action="/Course/SaveNew" method="post"> *@
+
+<form asp-action="SaveNew" asp-controller="Course" method="post">
+
+    <!--Tag Helper-->
+    <div>
+        <label asp-for="Name"></label>
+        <input class="form form-control" asp-for="Name" />
+    </div>
+    <div>
+        <label asp-for="Degree"></label>
+        <input class="form form-control" asp-for="Degree" />
+    </div>
+    <div>
+        <label asp-for="MinDegree"></label>
+        <input class="form form-control" asp-for="MinDegree" />
+    </div>
+    <div>
+        <label asp-for="Hours"></label>
+        <input class="form form-control" asp-for="Hours" />
+    </div>
+    <div>
+        <label asp-for="DeptId"></label>
+        @* <input class="form form-control" asp-for="DeptId" /> *@
+        @* <select class="form form-control" id = "DeptId" name = "DeptId" > *@
+        <select class="form form-control" asp-for="DeptId" asp-items="deptOptions">
+
+        </select>
+    </div>
+
+
+    <!--Pure HTML-->
+    @* <div> *@
+    @*     <label>Name</label> *@
+    @*     <input class="form-check form-control" type="text" name="Name" id="Name" value="@Model?.Name" /> *@
+    @* </div> *@
+    @* <div> *@
+    @*     <label>Degree</label> *@
+    @*     <input class="form-check form-control" type="number" name="Degree" id="Degree" value="@Model?.Degree" /> *@
+    @* </div> *@
+    @* <div> *@
+    @*     <label>MinDegree</label> *@
+    @*     <input class="form-check form-control" type="number" name="MinDegree" id="MinDegree" value="@Model?.MinDegree" /> *@
+    @* </div> *@
+    @* <div> *@
+    @*     <label>Hours</label> *@
+    @*     <input class="form-check form-control" type="number" name="Hours" id="Hours" value="@Model?.Hours" /> *@
+    @* </div> *@
+    @* <div> *@
+    @*     <label>DeptId</label> *@
+    @*     <input class="form-check form-control" type="number" name="DeptId" id="DeptId" value="@Model?.DeptId" /> *@
+    @* </div> *@
+
+    <input type="submit" value="Create" class="btn btn-success" />
+</form>
+@* <a href="/Course/Index">Back To List</a> *@
+
+<a asp-action="Index" asp-controller="Course">Back To List</a>

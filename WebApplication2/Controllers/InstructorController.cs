@@ -11,7 +11,7 @@ namespace WebApplication2.Controllers
         // Instructor/Index
         public IActionResult Index(int page=1)
         {
-            int pageSize = 3; // 3 instructors
+            int pageSize = 2; // 2 instructors
 
             var instructors = context.Instructors
                              .Skip((page - 1) * pageSize)

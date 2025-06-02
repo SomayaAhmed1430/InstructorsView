@@ -1,0 +1,51 @@
+﻿@model Course
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Course Detail</h1>
+
+<div class="details">
+	<div class="text">
+		<h2>
+			ID : @Model.Id
+		</h2>
+		<h4>
+			Name : @Model.Name
+		</h4>
+		<h4>
+			Degree : @Model.Degree
+		</h4>
+		<h4>
+			MinDegree : @Model.MinDegree
+		</h4>
+		<h4>
+			Hours : @Model.Hours
+		</h4>
+		<h4>
+			@* Address : @Model.Instructors *@
+		</h4>
+		<h4>
+			@* Address : @Model.CrsResults *@
+		</h4>
+	</div>
+</div>
+@* <a href="/Course/Index">back to list</a> *@
+<a asp-action="Index" asp-controller="Course" >back to list</a>
+
+
+<style>
+	.image img {
+		width: 400px;
+		border-radius: 20px;
+	}
+
+	.details {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.text {
+		padding: 50px;
+	}
+</style>
