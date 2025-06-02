@@ -9,10 +9,24 @@ namespace WebApplication2.Controllers
         Context context = new Context(); 
 
         // /Department/Index
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
-            List<Department> departments = context.Departments.ToList();
-            return View("Index", departments);
+            int pageSize = 5; // 5 Departments
+
+            var department = context.Departments
+                             .Skip((page - 1) * pageSize)
+                             .Take(pageSize)
+                             .ToList();
+
+            int totalCount = context.Departments.Count();
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(department);
+            //List<Department> departments = context.Departments.ToList();
+            //return View("Index", departments);
         }
 
         // /Department/Details/id
