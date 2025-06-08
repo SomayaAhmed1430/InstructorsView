@@ -7,7 +7,7 @@
 
 @* <a href="/Course/New">Add New Course</a> *@
 <a style="background-color: navy; color: white; padding: 7px 10px; text-decoration:none; border-radius: 5px;"
-   target="_blank" asp-action="New" asp-controller="Course">Add New Course</a>
+   asp-action="New" asp-controller="Course">Add New Course</a>
 
 <h2>All Courses</h2>
 
@@ -32,9 +32,9 @@
             <th>@item.DeptId</th>
             <th>
                 <a style="background-color: navy; color: white; padding: 7px 10px; text-decoration:none; border-radius: 5px;"
-                   target="_blank" href="/Course/Details/@item.Id">Details</a>
+                   href="/Course/Details/@item.Id">Details</a>
                 <a style="background-color: olivedrab; color: white; padding: 7px 10px; text-decoration:none; border-radius: 5px;"
-                   target="_blank" href="/Course/Edit/@item.Id">Edit</a>
+                   href="/Course/Edit/@item.Id">Edit</a>
                 @* <a class="btn btn-danger" href="/Instructor/Delete/@item.Id" *@
                 @*    onclick="return confirm('Are you sure you want to delete this instructor?')">Delete</a> *@
             </th>

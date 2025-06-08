@@ -52,11 +52,19 @@ namespace WebApplication2.Controllers
         // Course/SaveNew/values...
         public ActionResult SaveNew(Course CrsFromReq) 
         {
-            if (CrsFromReq.Name != null && CrsFromReq.Degree != null && CrsFromReq.MinDegree != null && CrsFromReq.Hours != null && CrsFromReq.DeptId != null) 
+            if (ModelState.IsValid == true) //&& CrsFromReq.Name != null && CrsFromReq.Degree != null && CrsFromReq.MinDegree != null && CrsFromReq.Hours != null && CrsFromReq.DeptId != null) 
             {
-                context.Courses.Add(CrsFromReq);
-                context.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    context.Courses.Add(CrsFromReq);
+                    context.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex) 
+                {
+                    //ModelState.AddModelError("DeptId", "Please Select Department");
+                    ModelState.AddModelError("NewKey", ex.InnerException.Message);
+                }
             }
             ViewBag.DeptList = context.Departments.ToList();  // ==>
             return View("New", CrsFromReq);
@@ -94,5 +102,14 @@ namespace WebApplication2.Controllers
             }
             return View("Edit", CrsFromReq);
         }
+
+        // validation
+        public IActionResult CheckMinDegree(int MinDegree, int Degree)
+        {
+            if (MinDegree >= Degree)
+                return Json(false);
+            return Json(true);
+        }
+
     }
 }
