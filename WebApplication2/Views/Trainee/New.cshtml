@@ -1,0 +1,30 @@
+﻿@model AddResultViewModel
+@{
+    ViewData["Title"] = "New";
+}
+
+<h1>Add Trainee Course Result</h1>
+
+<form method="post" asp-action="SaveNew">
+    <div class="mb-3">
+        <label>Trainee</label>
+        <select asp-for="TraineeId" class="form-control" asp-items="@(new SelectList(Model.TraineeList, "Id", "Name"))">
+            <option value="">-- Select Trainee --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Course</label>
+        <select asp-for="CrsId" class="form-control" asp-items="@(new SelectList(Model.CourseList, "Id", "Name"))">
+            <option value="">-- Select Course --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Degree</label>
+        <input asp-for="Degree" class="form-control" type="number" />
+    </div>
+
+    <input type="submit" value="Save" class="btn btn-success" />
+</form>
+<a class="btn btn-sm btn-info" href="/Trainee/Index">Back To List</a>

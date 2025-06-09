@@ -1,0 +1,42 @@
+﻿@model Trainee
+
+<h2>@Model.Name's Details</h2>
+
+<div>
+    <img src="~/imgs/@Model.img" alt="@Model.Name" width="150" />
+    <p><strong>Address:</strong> @Model.Addres</p>
+    <p><strong>Grade:</strong> @Model.Grade</p>
+    <p><strong>Department:</strong> @Model.Dept?.Name</p>
+</div>
+
+<h4>Course Results:</h4>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Degree</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var res in Model.CrsResults)
+        {
+            <tr>
+                <td>@res.Crs.Name</td>
+                <td>@res.Degree</td>
+                <td>
+                    @if (res.Degree >= res.Crs.MinDegree)
+                    {
+                        <span class="text-success">✔️ Success</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">❌ Failed</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a class="btn btn-sm btn-info" href="/Trainee/Index">Back To List</a>

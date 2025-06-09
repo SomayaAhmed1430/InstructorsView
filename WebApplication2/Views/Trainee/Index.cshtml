@@ -1,0 +1,54 @@
+﻿@model List<TraineeCourseResult>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Trainee Course Results</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Trainee</th>
+                <th>Course</th>
+                <th>Degree</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href="/Trainee/Details/@item.TraineeId">
+                            @item.TraineeName
+                        </a>
+                    </td>
+                    <td>@item.CourseName</td>
+                    <td>@item.Degree</td>
+                    <td>
+                        @if (item.IsPassed)
+                        {
+                            <span class="text-success fw-bold">✔ Success</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger fw-bold">❌ Failed</span>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-info" href="/Trainee/Details/@item.TraineeId">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+}
+else
+{
+    <p>No results found.</p>
+}
+<a class="btn btn-primary mb-3" href="/Trainee/New">Add Result</a>
