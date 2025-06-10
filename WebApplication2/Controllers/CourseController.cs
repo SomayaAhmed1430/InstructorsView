@@ -1,36 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
+using WebApplication2.Repository;
 
 namespace WebApplication2.Controllers
 {
     public class CourseController : Controller
     {
-        Context context = new Context();
+        //Context context = new Context();
+        CourseRepository CrsRepository;
+        DepartmentRepository DeptRepository;
+        public CourseController()
+        {
+            CrsRepository = new CourseRepository();
+            DeptRepository = new DepartmentRepository();
+        }
 
         // Course/index
-        public IActionResult Index(int page = 1)
-        {
-            int pageSize = 3; // 3 courses
+        public IActionResult Index()
+        {                
+            List<Course> CrsList = CrsRepository.GetAll();
 
-            var courses = context.Courses
-                             .Skip((page - 1) * pageSize)
-                             .Take(pageSize)
-                             .ToList();
-
-            int totalCount = context.Courses.Count();
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = totalPages;
-
-            return View(courses);
+            return View("Index", CrsList);
         }
 
 
         // Course/Details
         public IActionResult Details(int id) 
         { 
-            var crs = context.Courses.FirstOrDefault(c => c.Id == id);
+            var crs = CrsRepository.GetByID(id);
 
             if (crs == null) 
             { 
@@ -44,20 +41,22 @@ namespace WebApplication2.Controllers
         // Course/New
         public IActionResult New()
         {
-            ViewBag.DeptList = context.Departments.ToList();  // ==>
+            ViewBag.DeptList = DeptRepository.GetAll();  // ==>
             return View("New");
         }
 
 
         // Course/SaveNew/values...
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult SaveNew(Course CrsFromReq) 
         {
             if (ModelState.IsValid == true) //&& CrsFromReq.Name != null && CrsFromReq.Degree != null && CrsFromReq.MinDegree != null && CrsFromReq.Hours != null && CrsFromReq.DeptId != null) 
             {
                 try
                 {
-                    context.Courses.Add(CrsFromReq);
-                    context.SaveChanges();
+                    CrsRepository.Add(CrsFromReq);
+                    CrsRepository.Save();
                     return RedirectToAction("Index");
                 }
                 catch (Exception ex) 
@@ -66,7 +65,7 @@ namespace WebApplication2.Controllers
                     ModelState.AddModelError("NewKey", ex.InnerException.Message);
                 }
             }
-            ViewBag.DeptList = context.Departments.ToList();  // ==>
+            ViewBag.DeptList = DeptRepository.GetAll();  // ==>
             return View("New", CrsFromReq);
         }
 
@@ -74,8 +73,8 @@ namespace WebApplication2.Controllers
         // Course/Edit/id
         public IActionResult Edit(int id)
         {
-            Course CrsFromDB = context.Courses.FirstOrDefault(c=>c.Id == id);
-            ViewBag.DeptList = context.Departments.ToList();
+            Course CrsFromDB = CrsRepository.GetByID(id);
+            ViewBag.DeptList = DeptRepository.GetAll();
             return View("Edit",CrsFromDB);
         }
 
@@ -88,15 +87,17 @@ namespace WebApplication2.Controllers
             if (CrsFromReq.Name != null && CrsFromReq.Degree != null && CrsFromReq.MinDegree != null && CrsFromReq.Hours != null && CrsFromReq.DeptId != null)
             {
                 // get old ref
-                Course CrsFromDB = context.Courses.FirstOrDefault(e => e.Id == CrsFromReq.Id);
+                Course CrsFromDB = new Course();
                 // check modify based on comming data from request
+                CrsFromDB.Id = CrsFromReq.Id;
                 CrsFromDB.Name = CrsFromReq.Name;
                 CrsFromDB.Degree = CrsFromReq.Degree;
                 CrsFromDB.MinDegree = CrsFromReq.MinDegree;
                 CrsFromDB.Hours = CrsFromReq.Hours;
                 CrsFromDB.DeptId = CrsFromReq.DeptId;
+                CrsRepository.Update(CrsFromDB);
                 // save changes
-                context.SaveChanges();
+                CrsRepository.Save();
                 // return index
                 return RedirectToAction("Index", "Course");
             }
