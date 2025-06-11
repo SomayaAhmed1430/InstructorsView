@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using WebApplication2.Models;
 using WebApplication2.Repository;
 
 namespace WebApplication2
@@ -14,6 +17,12 @@ namespace WebApplication2
             builder.Services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+            // built in service need to register ==> connection string
+            // register option , Context
+            builder.Services.AddDbContext<Context>(optionBuilder => {
+                optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("CS"));
             });
 
             //builder.Services.AddScoped<ICourseRepository, CourseFromMemoryRepository>();  // Register

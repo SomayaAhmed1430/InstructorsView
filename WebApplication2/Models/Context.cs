@@ -14,6 +14,10 @@ namespace WebApplication2.Models
         public Context():base()
         {
         }
+
+        // inject DbContextOptions ==> ask service provider
+        public Context(DbContextOptions<Context> options): base(options) { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.;Database=D3M;Integrated Security=True;Encrypt=False");

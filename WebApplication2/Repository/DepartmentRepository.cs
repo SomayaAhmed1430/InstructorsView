@@ -5,9 +5,10 @@ namespace WebApplication2.Repository
     public class DepartmentRepository : IDepartmentRepository //IRepository<Department>
     {
         Context context;
-        public DepartmentRepository()
+        public DepartmentRepository(Context _context)  // dont create but ask(inject)
         {
-            context = new Context();
+            context = _context; 
+            //context = new Context();
         }
         public void Add(Department entity)
         {

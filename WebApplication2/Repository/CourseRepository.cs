@@ -6,9 +6,10 @@ namespace WebApplication2.Repository
     public class CourseRepository : ICourseRepository //IRepository<Course>
     {
         Context context;
-        public CourseRepository()
+        public CourseRepository(Context _context)  // use parameter constructor(inject context => inject options)
         {
-            context = new Context();
+            context = _context;
+            //context = new Context();  // use default constructor
         }
         public void Add(Course entity)
         {
