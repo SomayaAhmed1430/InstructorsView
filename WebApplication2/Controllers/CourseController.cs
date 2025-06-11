@@ -7,12 +7,17 @@ namespace WebApplication2.Controllers
     public class CourseController : Controller
     {
         //Context context = new Context();
-        CourseRepository CrsRepository;
-        DepartmentRepository DeptRepository;
-        public CourseController()
+
+        // DIP + IOC
+        ICourseRepository CrsRepository;
+        IDepartmentRepository DeptRepository;
+        public CourseController(ICourseRepository crsRepo, IDepartmentRepository deptRepo)  // Ask
         {
-            CrsRepository = new CourseRepository();
-            DeptRepository = new DepartmentRepository();
+            this.CrsRepository = crsRepo;
+            this.DeptRepository = deptRepo;
+
+            //CrsRepository = new CourseRepository();  // Dont Create
+            //DeptRepository = new DepartmentRepository();
         }
 
         // Course/index
@@ -51,7 +56,7 @@ namespace WebApplication2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveNew(Course CrsFromReq) 
         {
-            if (ModelState.IsValid == true) //&& CrsFromReq.Name != null && CrsFromReq.Degree != null && CrsFromReq.MinDegree != null && CrsFromReq.Hours != null && CrsFromReq.DeptId != null) 
+            if (CrsFromReq.Name != null && CrsFromReq.Degree != null && CrsFromReq.MinDegree != null && CrsFromReq.Hours != null && CrsFromReq.DeptId != null) 
             {
                 try
                 {

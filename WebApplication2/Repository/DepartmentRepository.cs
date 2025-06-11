@@ -2,7 +2,7 @@
 
 namespace WebApplication2.Repository
 {
-    public class DepartmentRepository : IRepository<Department>
+    public class DepartmentRepository : IDepartmentRepository //IRepository<Department>
     {
         Context context;
         public DepartmentRepository()

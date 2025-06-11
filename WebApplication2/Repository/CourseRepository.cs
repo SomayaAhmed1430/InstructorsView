@@ -3,7 +3,7 @@ using WebApplication2.Models;
 
 namespace WebApplication2.Repository
 {
-    public class CourseRepository : IRepository<Course>
+    public class CourseRepository : ICourseRepository //IRepository<Course>
     {
         Context context;
         public CourseRepository()

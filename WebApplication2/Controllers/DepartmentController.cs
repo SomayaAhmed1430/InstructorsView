@@ -1,38 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Migrations;
 using WebApplication2.Models;
+using WebApplication2.Repository;
 
 namespace WebApplication2.Controllers
 {
     public class DepartmentController : Controller
     {
-        Context context = new Context(); 
+        //Context context = new Context(); 
+
+        // DIP + IOC
+        IDepartmentRepository DeptRepository;
+        public DepartmentController(IDepartmentRepository deptRepo)
+        {
+            this.DeptRepository = deptRepo;
+
+            //DeptRepository = new DepartmentRepository();
+        }
 
         // /Department/Index
         public IActionResult Index(int page = 1)
         {
-            int pageSize = 5; // 5 Departments
-
-            var department = context.Departments
-                             .Skip((page - 1) * pageSize)
-                             .Take(pageSize)
-                             .ToList();
-
-            int totalCount = context.Departments.Count();
-            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-
-            ViewBag.CurrentPage = page;
-            ViewBag.TotalPages = totalPages;
-
-            return View(department);
-            //List<Department> departments = context.Departments.ToList();
-            //return View("Index", departments);
+            List<Department> deptList = DeptRepository.GetAll();
+            return View("Index", deptList);
         }
 
         // /Department/Details/id
         public IActionResult Details(int id)
         {
-            var dept = context.Departments.FirstOrDefault(d=>d.Id == id);
+            var dept = DeptRepository.GetByID(id);
 
             if (dept == null)
                 return NotFound();
@@ -60,11 +56,8 @@ namespace WebApplication2.Controllers
             //{
             if (DeptFromRequest.Name != null && DeptFromRequest.Manager != null)
             {
-                context.Departments.Add(DeptFromRequest);
-                context.SaveChanges();
-                //return View("Index");
-                //List<Department> departments = context.Departments.ToList();
-                //return View("Index", departments);
+                DeptRepository.Add(DeptFromRequest);
+                DeptRepository.Save();
                 return RedirectToAction("Index", "Department");
             }
             return View("New", DeptFromRequest);
@@ -75,7 +68,7 @@ namespace WebApplication2.Controllers
         // /Department/Edit/id
         public IActionResult Edit(int id) 
         {
-            Department DeptFromDB = context.Departments.FirstOrDefault(e=>e.Id == id);
+            Department DeptFromDB = DeptRepository.GetByID(id);
             return View("Edit", DeptFromDB);
         }
 
@@ -87,12 +80,14 @@ namespace WebApplication2.Controllers
             if (DFromReq.Name != null && DFromReq.Manager != null)
             {
                 // get old ref
-                Department De = context.Departments.FirstOrDefault(e=>e.Id == DFromReq.Id);
+                Department De = new Department();
                 // check modify based on comming data from request
+                De.Id = DFromReq.Id;
                 De.Name = DFromReq.Name;
                 De.Manager = DFromReq.Manager;
+                DeptRepository.Update(De);
                 // save changes
-                context.SaveChanges();
+                DeptRepository.Save();
                 // return index
                 return RedirectToAction("Index", "Department");
             }

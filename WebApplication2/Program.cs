@@ -1,3 +1,5 @@
+using WebApplication2.Repository;
+
 namespace WebApplication2
 {
     public class Program
@@ -13,6 +15,10 @@ namespace WebApplication2
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
+
+            //builder.Services.AddScoped<ICourseRepository, CourseFromMemoryRepository>();  // Register
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();  // Register
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
             var app = builder.Build();
 
