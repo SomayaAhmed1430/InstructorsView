@@ -41,5 +41,19 @@ namespace WebApplication2.Repository
             deptFromDB.Name = entity.Name;
             deptFromDB.Manager = entity.Manager;
         }
+
+        // pagination
+        public int GetCount()
+        {
+            return context.Departments.Count();
+        }
+
+        public List<Department> GetPaged(int page, int pageSize)
+        {
+            return context.Departments
+                          .Skip((page - 1) * pageSize)
+                          .Take(pageSize)
+                          .ToList();
+        }
     }
 }

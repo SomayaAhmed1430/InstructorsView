@@ -44,5 +44,15 @@ namespace WebApplication2.Repository
         {
             throw new NotImplementedException();
         }
+
+        public List<Course> GetPaged(int page, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetCount()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

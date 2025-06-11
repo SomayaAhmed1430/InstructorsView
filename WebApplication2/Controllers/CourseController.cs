@@ -21,11 +21,21 @@ namespace WebApplication2.Controllers
         }
 
         // Course/index
-        public IActionResult Index()
-        {                
-            List<Course> CrsList = CrsRepository.GetAll();
+        public IActionResult Index(int page = 1)
+        {
+            int pageSize = 3;
 
-            return View("Index", CrsList);
+            List<Course> pagedCourses = CrsRepository.GetPaged(page, pageSize);
+            int totalCount = CrsRepository.GetCount();
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View("Index", pagedCourses);
+
+            //List<Course> CrsList = CrsRepository.GetAll();
+            //return View("Index", CrsList);
         }
 
 

@@ -21,8 +21,19 @@ namespace WebApplication2.Controllers
         // /Department/Index
         public IActionResult Index(int page = 1)
         {
-            List<Department> deptList = DeptRepository.GetAll();
-            return View("Index", deptList);
+            int pageSize = 3;
+
+            List<Department> pagedDepatrments = DeptRepository.GetPaged(page, pageSize);
+            int totalCount = DeptRepository.GetCount();
+            int totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View("Index", pagedDepatrments);
+
+            //List<Department> deptList = DeptRepository.GetAll();
+            //return View("Index", deptList);
         }
 
         // /Department/Details/id

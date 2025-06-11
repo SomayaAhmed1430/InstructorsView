@@ -45,5 +45,16 @@ namespace WebApplication2.Repository
             crsFromDB.Hours = entity.Hours;
             crsFromDB.DeptId = entity.DeptId;
         }
+
+        // pagination
+        public int GetCount()
+        {
+            return context.Courses.Count();
+        }
+
+        public List<Course> GetPaged(int page, int pageSize)
+        {
+            return context.Courses.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
     }
 }

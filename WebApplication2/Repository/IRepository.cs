@@ -8,5 +8,10 @@
         void Update(T entity);
         void Delete(int id);
         void Save();
+
+        //pagination
+        List<T> GetPaged(int page, int pageSize);
+        int GetCount();
+
     }
 }
