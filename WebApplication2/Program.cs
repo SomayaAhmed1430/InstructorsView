@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using WebApplication2.Models;
@@ -24,6 +25,9 @@ namespace WebApplication2
             builder.Services.AddDbContext<Context>(optionBuilder => {
                 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("CS"));
             });
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<Context>();
 
             //builder.Services.AddScoped<ICourseRepository, CourseFromMemoryRepository>();  // Register
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();  // Register

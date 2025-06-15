@@ -10,6 +10,14 @@
 
  5) Registration
 
+ 6) AccountController (register - login - logout - forget password)
 
+ 7) Register Action
+
+ 8) Index inside DepartmentController [Authorize]
+
+ 9) Register IdentityService in Program
+
+ 
  
  */

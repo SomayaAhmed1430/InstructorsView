@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Migrations;
 using WebApplication2.Models;
 using WebApplication2.Repository;
@@ -19,6 +20,7 @@ namespace WebApplication2.Controllers
         }
 
         // /Department/Index
+        [Authorize]
         public IActionResult Index(int page = 1)
         {
             int pageSize = 3;
