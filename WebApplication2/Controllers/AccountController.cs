@@ -55,6 +55,36 @@ namespace WebApplication2.Controllers
         }
         #endregion
 
+        #region LogIn
+        public IActionResult LogIn()
+        {
+            return View("LogIn");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogIn(LogInViewModel logInVM)
+        {
+            if (ModelState.IsValid) 
+            {
+                // check if found
+                ApplicationUser user = await userManager.FindByNameAsync(logInVM.UserName);
+                if (user != null)
+                {
+                    bool found = await userManager.CheckPasswordAsync(user, logInVM.Password);
+                    if (found) 
+                    { 
+                        // cookie
+                        await signInManager.SignInAsync(user, logInVM.RememberMe);
+                        return RedirectToAction("Index", "Department");
+                    }
+                }
+                ModelState.AddModelError("", "Invalid Account");
+            }
+            return View("LogIn", logInVM);
+        }
+        #endregion
+
         #region LogOut
         public async Task<IActionResult> LogOut()
         {
