@@ -41,6 +41,9 @@ namespace WebApplication2.Controllers
                 IdentityResult result = await userManager.CreateAsync(user, UserVM.Password);  // success | fail
                 if (result.Succeeded)
                 {
+                    // assign user to role Admin
+                    await userManager.AddToRoleAsync(user, "Admin");
+
                     // create cookie with specific claim(id - name - [email] - [role])
                     //SignInManager<ApplicationUser> signInManager = new SignInManager<ApplicationUser>();  ==> ask in ctor
                     await signInManager.SignInAsync(user, false);
