@@ -26,8 +26,17 @@ namespace WebApplication2
                 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("CS"));
             });
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>( 
+                Options => 
+                {
+                    Options.Password.RequireNonAlphanumeric = false;
+                    Options.Password.RequiredLength = 4;
+                })
                 .AddEntityFrameworkStores<Context>();
+
+
+
 
             //builder.Services.AddScoped<ICourseRepository, CourseFromMemoryRepository>();  // Register
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();  // Register

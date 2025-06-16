@@ -16,6 +16,8 @@ namespace WebApplication2.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+
+        #region Register
         public IActionResult Register()
         {
             return View("Register");
@@ -35,7 +37,7 @@ namespace WebApplication2.Controllers
                     PasswordHash   = UserVM.Password,
                     Address        = UserVM.Address,
                 };
-                IdentityResult result = await userManager.CreateAsync(user);  // success | fail
+                IdentityResult result = await userManager.CreateAsync(user, UserVM.Password);  // success | fail
                 if (result.Succeeded)
                 {
                     // create cookie with specific claim(id - name - [email] - [role])
@@ -51,5 +53,14 @@ namespace WebApplication2.Controllers
             }
             return View("Register", UserVM);
         }
+        #endregion
+
+        #region LogOut
+        public async Task<IActionResult> LogOut()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("LogIn");
+        }
+        #endregion
     }
 }
