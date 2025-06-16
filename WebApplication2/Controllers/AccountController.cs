@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Models;
@@ -73,9 +74,13 @@ namespace WebApplication2.Controllers
                 {
                     bool found = await userManager.CheckPasswordAsync(user, logInVM.Password);
                     if (found) 
-                    { 
+                    {
                         // cookie
-                        await signInManager.SignInAsync(user, logInVM.RememberMe);
+                        List<Claim> claims = new List<Claim>();
+                        claims.Add(new Claim("Address", user.Address));
+                        await signInManager.SignInWithClaimsAsync(user, logInVM.RememberMe, claims);
+
+                        //await signInManager.SignInAsync(user, logInVM.RememberMe); // id, name, role, email
                         return RedirectToAction("Index", "Department");
                     }
                 }

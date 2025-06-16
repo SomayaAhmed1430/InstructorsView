@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Migrations;
 using WebApplication2.Models;
@@ -105,6 +106,25 @@ namespace WebApplication2.Controllers
                 return RedirectToAction("Index", "Department");
             }
             return View("Edit", DFromReq);
+        }
+
+
+        public IActionResult Welcome() 
+        {
+            if(User.Identity.IsAuthenticated == true)
+            {
+                // authorize welcome username
+                Claim IdClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);  // name identitifier
+                string id = IdClaim.Value;
+                User.Claims.FirstOrDefault(c => c.Type == "Zaied");
+
+                return Content($"Welcome {User.Identity.Name}");
+            }
+            else
+            {
+                // anonnymous welcome guest
+                return Content("Welcome Guest");
+            }
         }
     }
 }
