@@ -37,6 +37,8 @@ Relationships are set up using navigation properties and proper foreign keys.
 - Remote Validation using AJAX for live server-side checks
 - Details view with success/failure status based on grades
 - Clean separation of concerns using Repository Pattern & Interfaces
+- Identity & Authorization system implemented (Admin, Roles, Login, Logout)
+
 
 ## Design Patterns & Principles Used
 
@@ -60,6 +62,8 @@ Relationships are set up using navigation properties and proper foreign keys.
 - SQL Server
 - Razor View Engine
 - Visual Studio 2022
+- ASP.NET Core Identity
+- Authentication / Authorization
 
 ## How to Run
 
